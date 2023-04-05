@@ -6,30 +6,31 @@ import {networkInterfaces} from "os";
 
 function App() {
 
-    let [tasks1, setTasks] = useState( [
-        { id: 1, title: "HTML&CSS", isDone: true },
-        { id: 2, title: "JS", isDone: true },
-        { id: 3, title: "ReactJS", isDone: false }
+    let [tasks1, setTasks] = useState([
+        {id: 1, title: "HTML&CSS", isDone: true},
+        {id: 2, title: "JS", isDone: true},
+        {id: 3, title: "ReactJS", isDone: false}
     ])
 
-    const removeTask = (taskId:number)=>{
-        setTasks(tasks1.filter(el=>el.id !=taskId))
+    const removeTask = (taskId: number) => {
+        setTasks(tasks1.filter(el => el.id != taskId))
     }
-    let filteredTasks = tasks1
+
+    let [sortValue, setSortValue] = useState('All')
+
     const sort = (btnsortname: string) => {
-
-        if (btnsortname==='Active') {
-            filteredTasks = tasks1.filter(el=> !el.isDone)
-        }
-        if (btnsortname==='Completed') {
-            filteredTasks = tasks1.filter(el=> el.isDone)
-        }
-        if (btnsortname==='All') {
-            filteredTasks = tasks1
-        }
-        return filteredTasks
-
+        setSortValue(btnsortname)
     }
+
+
+    let filteredTasks = tasks1
+    if (sortValue === 'Active') {
+        filteredTasks = tasks1.filter(el => !el.isDone)
+    }
+    if (sortValue === 'Completed') {
+        filteredTasks = tasks1.filter(el => el.isDone)
+    }
+
 
     return (
         <div className="App">
