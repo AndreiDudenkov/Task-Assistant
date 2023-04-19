@@ -16,24 +16,26 @@ type PropsType = {
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValuesType) => void
     addTask: (title: string) => void
-    checkboxChange: (taskCbId: string, newIsDone:boolean)=> void
+    checkboxChange: (taskCbId: string, newIsDone: boolean) => void
 }
 
 export function Todolist(props: PropsType) {
 
-    let [title, setTitle] = useState("")
+    let [title, setTitle] = useState('')
+    let [userError, setUserError] = useState<string | null>(null)
 
     const addTask = () => {
-        if (title.trim()!==''){
-        props.addTask(title.trim());
-        setTitle("");
-        setUserError(false)
-    } else {
-            setUserError(true)
+        if (title.trim() !== '') {
+            props.addTask(title.trim());
+            setTitle('');
+            setUserError(null)
+        } else {
+            setUserError('Wrong task')
         }
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setUserError(null)
         setTitle(e.currentTarget.value)
     }
 
@@ -42,23 +44,23 @@ export function Todolist(props: PropsType) {
             addTask();
         }
     }
-    let [userError,setUserError] = useState(false)
 
-    const onAllClickHandler = () => props.changeFilter("all");
-    const onActiveClickHandler = () => props.changeFilter("active");
-    const onCompletedClickHandler = () => props.changeFilter("completed");
+
+    const onAllClickHandler = () => props.changeFilter('all');
+    const onActiveClickHandler = () => props.changeFilter('active');
+    const onCompletedClickHandler = () => props.changeFilter('completed');
 
     return <div>
         <h3>{props.title}</h3>
         <div>
             <input value={title}
-                   className={userError===true ? 'error':''}
-                   onChange={ onChangeHandler }
-                   onKeyPress={ onKeyPressHandler }
+                   className={userError ? 'error' : ''}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
             />
             <button onClick={addTask}>+</button>
-            </div>
-            {userError===true ? <div className={'error-message'}>Wrong task</div>:''}
+        </div>
+        {userError && <div className={'error-message'}>{userError}</div>}
         <ul>
             {
                 props.tasks.map(t => {
@@ -70,15 +72,15 @@ export function Todolist(props: PropsType) {
                     return <li key={t.id}>
                         <input type="checkbox" onChange={changeIsDoneHandler} checked={t.isDone}/>
                         <span>{t.title}</span>
-                        <button onClick={ onClickHandler }>x</button>
+                        <button onClick={onClickHandler}>x</button>
                     </li>
                 })
             }
         </ul>
         <div>
-            <button onClick={ onAllClickHandler }>All</button>
-            <button onClick={ onActiveClickHandler }>Active</button>
-            <button onClick={ onCompletedClickHandler }>Completed</button>
+            <button onClick={onAllClickHandler}>All</button>
+            <button onClick={onActiveClickHandler}>Active</button>
+            <button onClick={onCompletedClickHandler}>Completed</button>
         </div>
     </div>
 }

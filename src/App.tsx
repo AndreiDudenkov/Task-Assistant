@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
-import { v1 } from 'uuid';
-import {takeCoverage} from 'v8';
+import {v1} from 'uuid';
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -27,7 +26,7 @@ function App() {
         setTasks(newTasks);
     }
     function checkboxChange (taskCbId:string, newIsDone:boolean) {
-        setTasks(tasks.map(el => el.id === taskCbId ? {...el,isDone:newIsDone }:el))
+        setTasks(tasks.map(el => el.id === taskCbId ?{...el,isDone:newIsDone }:el))
 
         // let task = tasks.find(t=>t.id === taskCbId)
         // if(task) {
@@ -36,7 +35,9 @@ function App() {
         // }
 
     }
+    const tools = () =>{
 
+    }
     let [filter, setFilter] = useState<FilterValuesType>("all");
 
     let tasksForTodolist = tasks;
