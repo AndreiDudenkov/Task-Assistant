@@ -130,6 +130,8 @@ export const App = () => {
                     changeTaskStatus={changeStatus}
                     filter={tasks[el.id].filter}
                     removeTodolist={removeTodolist}
+                    changeTaskTitle={changeTaskTitle}
+                    changeTodolistTitle={changeTodolistTitle}
                 />
             )
         })

@@ -2,10 +2,13 @@
 .App {
   padding: 30px;
   display: flex;
+
 }
 
 .App > div {
   margin-right: 50px;
+  padding: 20px;
+  background-color: darkseagreen ;
 }
 
 .error {
