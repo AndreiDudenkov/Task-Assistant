@@ -8,15 +8,15 @@ type AddItemFormPropsType = {
 
 export function AddItemForm(props: AddItemFormPropsType) {
 
-    let [title, setTitle] = useState('')
+    let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
     const addItem = () => {
-        if (title.trim() !== '') {
+        if (title.trim() !== "") {
             props.addItem(title);
-            setTitle('');
+            setTitle("");
         } else {
-            setError('Title is required');
+            setError("Title is required");
         }
     }
 
@@ -30,29 +30,32 @@ export function AddItemForm(props: AddItemFormPropsType) {
             addItem();
         }
     }
-    const matStyle = {
+
+    const muiStyles = {
         maxWidth: '38px',
         maxHeight: '38px',
         minWidth: '38px',
         minHeight: '38px',
     }
+
     return <div>
-        {/*<input value={title}*/}
-        {/*       onChange={onChangeHandler}*/}
-        {/*       onKeyPress={onKeyPressHandler}*/}
-        {/*       className={error ? "error" : ""}*/}
-        {/*/>*/}
+
+
         <TextField
             error={!!error}
-            size= "small"
+            size='small'
             value={title}
             onChange={onChangeHandler}
             onKeyPress={onKeyPressHandler}
             id="outlined-basic"
-            label={error? "Title is required":"Type something"}
-            variant="outlined"/>
+            label={error ? "Title is required" : "Type out smth."}
+            variant="outlined"
+        />
 
-        <Button variant="contained" onClick={addItem} style={matStyle}>+</Button>
+        {/*<button onClick={addItem}>+</button>*/}
+
+        <Button variant="contained" onClick={addItem} style={muiStyles}>+</Button>
+
 
         {/*{error && <div className="error-message">{error}</div>}*/}
     </div>
