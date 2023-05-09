@@ -1,61 +1,59 @@
-import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-type AddItemFormType = {
-    addItem: (title:string) => void
-    maxTitleLength: number
-    recommendedTitleLength: number
+type AddItemFormPropsType = {
+    addItem: (title: string) => void
 }
 
-
-export  const AddItemForm: FC<AddItemFormType> = ({addItem, maxTitleLength, recommendedTitleLength }) => {
+export function AddItemForm(props: AddItemFormPropsType) {
 
     let [title, setTitle] = useState('')
-    let [error, setError] = useState<boolean>(false)
+    let [error, setError] = useState<string | null>(null)
 
+    const addItem = () => {
+        if (title.trim() !== '') {
+            props.addItem(title);
+            setTitle('');
+        } else {
+            setError('Title is required');
+        }
+    }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(false)
         setTitle(e.currentTarget.value)
     }
 
-
-    const isAddTaskNotPossible: boolean = !title.length || title.length > maxTitleLength || error
-
-    const addTaskHandler = () => {
-        if (title.trim() !== "") {
-            addItem(title.trim());
-
-        } else {
-            setError(true);
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        setError(null);
+        if (e.charCode === 13) {
+            addItem();
         }
-        setTitle("");
     }
+    const matStyle = {
+        maxWidth: '38px',
+        maxHeight: '38px',
+        minWidth: '38px',
+        minHeight: '38px',
+    }
+    return <div>
+        {/*<input value={title}*/}
+        {/*       onChange={onChangeHandler}*/}
+        {/*       onKeyPress={onKeyPressHandler}*/}
+        {/*       className={error ? "error" : ""}*/}
+        {/*/>*/}
+        <TextField
+            error={!!error}
+            size= "small"
+            value={title}
+            onChange={onChangeHandler}
+            onKeyPress={onKeyPressHandler}
+            id="outlined-basic"
+            label={error? "Title is required":"Type something"}
+            variant="outlined"/>
 
-    const onKeyUpHandler = isAddTaskNotPossible
-        ? undefined
-        : (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
+        <Button variant="contained" onClick={addItem} style={matStyle}>+</Button>
 
-
-    const longTitleWarningMessage = (title.length > recommendedTitleLength && title.length <= maxTitleLength) &&
-        <div style={{color: 'orange'}}>Title should be shooter</div>
-
-    const longTitleErrorMessage = title.length > maxTitleLength &&
-        <div style={{color: '#f23391'}}>Title is too long!!!</div>
-
-    const errorMessage = error && <div style={{color: '#f23391'}}>Title is hard required!</div>
-    return (
-        <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyUp={onKeyUpHandler}
-                   className={error ? 'error' : ''}
-            />
-            <button onClick={addTaskHandler} disabled={isAddTaskNotPossible}>+</button>
-            {longTitleWarningMessage}
-            {longTitleErrorMessage}
-            {errorMessage}
-            {/*{error && <div className="error-message">{error}</div>}*/}
-        </div>
-    );
-};
-
+        {/*{error && <div className="error-message">{error}</div>}*/}
+    </div>
+}
