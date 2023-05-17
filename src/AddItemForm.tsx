@@ -1,6 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import {IconButton, TextField} from "@mui/material";
+import {AddBox} from "@mui/icons-material";
+
+
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -31,32 +33,17 @@ export function AddItemForm(props: AddItemFormPropsType) {
         }
     }
 
-    const muiStyles = {
-        maxWidth: '38px',
-        maxHeight: '38px',
-        minWidth: '38px',
-        minHeight: '38px',
-    }
-
     return <div>
-
-
-        <TextField
-            error={!!error}
-            size='small'
-            value={title}
-            onChange={onChangeHandler}
-            onKeyPress={onKeyPressHandler}
-            id="outlined-basic"
-            label={error ? "Title is required" : "Type out smth."}
-            variant="outlined"
+        <TextField variant="outlined"
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
         />
-
-        {/*<button onClick={addItem}>+</button>*/}
-
-        <Button variant="contained" onClick={addItem} style={muiStyles}>+</Button>
-
-
-        {/*{error && <div className="error-message">{error}</div>}*/}
+        <IconButton color="primary" onClick={addItem}>
+            <AddBox />
+        </IconButton>
     </div>
 }
