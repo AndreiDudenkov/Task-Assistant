@@ -27,9 +27,9 @@ type PropsType = {
 
 export const Todolist = React.memo(function (props: PropsType) {
     const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(getTasksTC(props.id))
-    }, [])
+        useEffect(() => {
+            dispatch(getTasksTC(props.id))
+        }, [])
 
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
@@ -55,7 +55,6 @@ export const Todolist = React.memo(function (props: PropsType) {
     if (props.filter === 'completed') {
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
-
     return <div>
         <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist}>
@@ -64,6 +63,7 @@ export const Todolist = React.memo(function (props: PropsType) {
         </h3>
         <AddItemForm addItem={addTask}/>
         <div>
+
             {
                 tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={props.id}
                                                 removeTask={props.removeTask}

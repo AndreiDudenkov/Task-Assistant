@@ -117,11 +117,18 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return ({...state});
         }
         case 'ADD-TODOLIST': {
+
             return {
                 ...state,
-                [action.todolistId]: []
+                [action.todolist.id]:[]
             }
-        }
+            }
+        //
+        //     return {
+        //         ...state,
+        //         [action.todolistId]: []
+        //     }
+        // }
         case 'REMOVE-TODOLIST': {
             const copyState = {...state};
             delete copyState[action.id];
@@ -196,9 +203,11 @@ export const updateTaskTC = (todolistId: string, taskId: string, data: FlexType)
                 status:task.status,
                 ...data
             }
+            debugger
             todolistsAPI.updateTask(todolistId, taskId, model)
                 .then((res) => {
                     dispatch(changeTaskStatusAC(taskId,model,todolistId ))
                 })
         }
     }
+
