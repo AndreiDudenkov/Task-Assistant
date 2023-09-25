@@ -1,7 +1,5 @@
 import axios from 'axios';
-import {UpdateDomainTaskModelType} from '../../features/TodolistsList/tasks.reducer';
-import {TaskPriorities, TaskStatuses} from '../enums/enums';
-import {BaseResponse} from '../types';
+
 
 
 export const instance = axios.create({
